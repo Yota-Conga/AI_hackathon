@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask on Render</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Flask on Render</h1>
+
+    <p>
+        デプロイ成功！
+    </p>
+
+    <button onclick="showMessage()">
+        Click Me
+    </button>
+
+    <p id="message"></p>
+</div>
+
+<script>
+function showMessage() {
+    document.getElementById("message").innerText =
+        "Hello from Flask!";
+}
+</script>
+
+</body>
+</html>
