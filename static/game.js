@@ -11,7 +11,7 @@ let gameState = {
 // ===== INIT =====
 function startGame() {
     try {
-        gameState = { timer: 120, totalTime: 120, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
+        gameState = { timer: 60, totalTime: 60, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
         // 画面切り替え
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('screen-game').classList.add('active');
@@ -332,20 +332,14 @@ function toggleModelAnswer() {
 
 // ===== UTILITIES =====
 function renderMarkdown(text) {
-    // Escape HTML first
     let html = text
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
-    // ## Heading
     html = html.replace(/^## (.+)$/gm, '<h3 class="ai-heading">$1</h3>');
-    // **bold**
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    // *italic*
-    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    // newlines to <br>
-    html = html.replace(/
-/g, '<br>');
+    html = html.replace(/\*([^*]+?)\*/g, '<em>$1</em>');
+    html = html.split('\n').join('<br>');
     return html;
 }
 
