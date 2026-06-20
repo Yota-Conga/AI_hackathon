@@ -1,6 +1,6 @@
 // ===== STATE =====
 let gameState = {
-    timer: 120,
+    timer: 60,
     timerInterval: null,
     currentDocId: null,
     tamperedDocs: {},
@@ -62,7 +62,7 @@ function updateProgress() {
 
 function autoConfirm() { confirmTampering(); }
 
-// ===== SUSPECT MATRIX (3x3) =====
+// ===== SUSPECT MATRIX (4 suspects x 3 time slots) =====
 function buildSuspectMatrix() {
     const container = document.getElementById('suspect-list');
     const suspects = GAME_DATA.suspects;
@@ -77,8 +77,11 @@ function buildSuspectMatrix() {
         </thead>
         <tbody>`;
     suspects.forEach(s => {
-        html += `<tr>
-            <th>${s.name}<span class="suspect-color-tag">${s.color}</span></th>
+        const isPlayer = s.is_player === true;
+        const rowClass = isPlayer ? ' class="player-row"' : '';
+        const nameBadge = isPlayer ? ' <span class="you-badge">YOU</span>' : '';
+        html += `<tr${rowClass}>
+            <th>${s.name}${nameBadge}<span class="suspect-color-tag">${s.color}</span></th>
             <td>${s.morning}</td>
             <td>${s.noon}</td>
             <td>${s.night}</td>
