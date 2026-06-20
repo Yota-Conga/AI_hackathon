@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
-    <title>Flask on Render</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Gemini API Test</title>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>Flask on Render</h1>
+    <h1>Gemini API 動作確認</h1>
 
-    <p>
-        デプロイ成功！
-    </p>
+    <form action="/ask" method="post">
 
-    <button onclick="showMessage()">
-        Click Me
-    </button>
+        <textarea
+            name="prompt"
+            rows="5"
+            cols="60"
+            placeholder="質問を入力してください"
+        >{{ prompt if prompt else "" }}</textarea>
 
-    <p id="message"></p>
-</div>
+        <br><br>
 
-<script>
-function showMessage() {
-    document.getElementById("message").innerText =
-        "Hello from Flask!";
-}
-</script>
+        <button type="submit">
+            Geminiへ送信
+        </button>
+
+    </form>
+
+    {% if result %}
+
+    <hr>
+
+    <h2>Geminiの応答</h2>
+
+    <pre>{{ result }}</pre>
+
+    {% endif %}
 
 </body>
+
 </html>
