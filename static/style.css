@@ -30,17 +30,18 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 /* ===== TITLE SCREEN ===== */
 .title-bg {
     flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
+    position: relative; overflow-y: auto; overflow-x: hidden;
+    padding: 2rem 1rem;
     background: radial-gradient(ellipse 80% 60% at 50% 40%, #001a0d 0%, transparent 70%), var(--bg);
 }
 .scanlines {
     position: absolute; inset: 0; pointer-events: none; z-index: 0;
     background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,136,0.015) 2px, rgba(0,255,136,0.015) 4px);
 }
-.glitch-container { position: relative; z-index: 1; text-align: center; margin-bottom: 2rem; }
+.glitch-container { position: relative; z-index: 1; text-align: center; margin-bottom: 1rem; }
 .title-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.3em; color: var(--green-dim); margin-bottom: 0.5rem; }
 .title-main {
-    font-family: var(--font-mono); font-size: clamp(5rem, 18vw, 10rem); font-weight: 400;
+    font-family: var(--font-mono); font-size: clamp(3.5rem, 12vw, 7rem); font-weight: 400;
     color: var(--green); letter-spacing: 0.05em; line-height: 1;
     text-shadow: 0 0 20px rgba(0,255,136,0.6), 0 0 60px rgba(0,255,136,0.2);
     position: relative;
@@ -51,7 +52,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 @keyframes glitch-a { 0%,88%,92%,100%{opacity:0} 89%,91%{opacity:.8;transform:translateX(-3px)} }
 @keyframes glitch-b { 0%,88%,92%,100%{opacity:0} 89%,91%{opacity:.8;transform:translateX(3px)} }
 .title-sub { font-family: var(--font-body); font-size: 1.5rem; font-weight: 400; color: #e0e8f0; letter-spacing: 0.35em; margin-top: 0.4rem; text-shadow: 0 0 12px rgba(200,220,255,0.3); }
-.title-desc { text-align: center; margin-bottom: 2.5rem; z-index: 1; position: relative; }
+.title-desc { text-align: center; margin-bottom: 1.5rem; z-index: 1; position: relative; }
 .title-desc p { font-size: 0.95rem; line-height: 1.9; color: #b8ccd8; }
 .title-desc .highlight { color: var(--red); font-weight: 700; }
 .title-desc .desc-story { font-size: 0.95rem; color: #c8d8e8; line-height: 2; }
@@ -286,4 +287,41 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
     margin-left: 0.4rem;
     vertical-align: middle;
     letter-spacing: 0.1em;
+}
+
+/* ===== PLACEHOLDER STEPS ===== */
+.placeholder-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 420px;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+.ph-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--green);
+    padding: 0.65rem 0.9rem;
+    border-radius: 2px;
+}
+.ph-step-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--green);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    letter-spacing: 0.05em;
+}
+.ph-step-text {
+    font-size: 0.82rem;
+    color: #b8ccd8;
+    line-height: 1.7;
+}
+.ph-step-text strong {
+    color: #e8f4ff;
+    font-weight: 700;
 }
