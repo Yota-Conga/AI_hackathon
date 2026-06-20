@@ -80,7 +80,7 @@ GAME_DATA = {
                 {"id": "w2e", "text": "レイ・クロウ", "editable": True, "max_chars": 10},
                 {"id": "w2b", "text": "の名前を挙げた。", "editable": False}
             ],
-            "total_char_limit": 5
+            "total_char_limit": 10
         },
         {
             "id": "doc_forensic",
@@ -98,7 +98,7 @@ GAME_DATA = {
                 {"id": "f2e", "text": "桐島 誠", "editable": True, "max_chars": 8},
                 {"id": "f2b", "text": "の靴サイズと合致した。", "editable": False}
             ],
-            "total_char_limit": 5
+            "total_char_limit": 10
         },
         {
             "id": "doc_timeline",
@@ -119,7 +119,7 @@ GAME_DATA = {
                 {"id": "t3e", "text": "レイ・クロウ", "editable": True, "max_chars": 8},
                 {"id": "t3b", "text": "（150万円、返済期限3ヶ月超過）。", "editable": False}
             ],
-            "total_char_limit": 5
+            "total_char_limit": 10
         }
     ],
     "true_culprit": "レイ・クロウ",
