@@ -10,26 +10,34 @@ let gameState = {
 
 // ===== INIT =====
 function startGame() {
-    gameState = { timer: 60, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
-    document.getElementById('screen-title').classList.remove('active');
-    document.getElementById('screen-game').classList.add('active');
-    document.getElementById('doc-placeholder').classList.remove('hidden');
-    document.getElementById('doc-viewer').classList.add('hidden');
-    document.getElementById('char-panel').classList.add('hidden');
-    buildDocIcons();
-    buildSuspectMatrix();
-    startTimer();
-    showTutorialHint();
+    try {
+        gameState = { timer: 120, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
+        // 画面切り替え
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-game').classList.add('active');
+        // 初期表示リセット
+        document.getElementById('doc-placeholder').classList.remove('hidden');
+        document.getElementById('doc-viewer').classList.add('hidden');
+        document.getElementById('char-panel').classList.add('hidden');
+        buildDocIcons();
+        buildSuspectMatrix();
+        startTimer();
+        showTutorialHint();
+    } catch(e) {
+        console.error('startGame error:', e);
+        alert('初期化エラー: ' + e.message);
+    }
 }
 
 function restartGame() {
-    document.getElementById('screen-result').classList.remove('active');
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('screen-title').classList.add('active');
 }
 
 // ===== TUTORIAL HINT =====
 function showTutorialHint() {
     const btn = document.querySelector('.suspect-btn');
+    if (!btn) return;
     btn.style.borderColor = 'var(--amber)';
     btn.style.color = 'var(--amber)';
     setTimeout(() => { btn.style.borderColor = ''; btn.style.color = ''; }, 3000);
@@ -260,7 +268,7 @@ function hideAILoading() { clearInterval(loadingInterval); document.getElementBy
 
 // ===== RESULT SCREEN =====
 function showResult(data) {
-    document.getElementById('screen-game').classList.remove('active');
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('screen-result').classList.add('active');
 
     const verdictEl = document.getElementById('result-verdict');
