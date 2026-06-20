@@ -22,7 +22,7 @@
             <div class="title-desc">
                 <p class="desc-story">西暦2047年。警察はすべての捜査を<span class="highlight">AIに委ねた。</span></p>
                 <p class="desc-story">あなたはハッカー <span class="highlight">レイ・クロウ</span>。<br>被害者を殺したのは——あなただ。</p>
-                <p class="desc-story">だが証拠資料がAIに送信される前に、<br>あなたには <span class="highlight">120秒</span> だけハッキングの時間がある。</p>
+                <p class="desc-story">だが証拠資料がAIに送信される前に、<br>あなたには <span class="highlight">180秒</span> だけハッキングの時間がある。</p>
                 <p class="desc-small">資料を書き換えて、別の誰かを犯人に仕立て上げろ。<br>AIは与えられたデータしか信じない——それがお前の唯一の武器だ。</p>
             </div>
             <button class="btn-start" onclick="startGame()">
@@ -77,9 +77,25 @@
             <!-- CENTER PANEL: document viewer -->
             <div class="center-panel">
                 <div id="doc-placeholder" class="doc-placeholder">
-                    <div class="placeholder-icon">🔒</div>
-                    <div class="placeholder-text">下の資料アイコンを選択して<br>内容を確認・改竄せよ</div>
-                    <div class="placeholder-warn">⚠ 初期状態ではすべての証拠があなたを指している</div>
+                    <div class="placeholder-icon">⚠️</div>
+                    <div class="placeholder-warn">すべての証拠が、あなたを指している。</div>
+                    <div class="placeholder-first-action">
+                        まず <strong>← 左の 🗂️ ボタン</strong> を押して<br>容疑者一覧を開き、なすりつける相手を決めろ
+                    </div>
+                    <div class="placeholder-steps">
+                        <div class="ph-step">
+                            <span class="ph-step-num">01</span>
+                            <span class="ph-step-text">← まず左の <strong>容疑者リスト</strong> を開き、<br>罪をなすりつける相手を決めろ</span>
+                        </div>
+                        <div class="ph-step">
+                            <span class="ph-step-num">02</span>
+                            <span class="ph-step-text">下の <strong>資料アイコン</strong> を選んで内容を確認し、<br>あなたの名前を別の人物に書き換えろ</span>
+                        </div>
+                        <div class="ph-step">
+                            <span class="ph-step-num">03</span>
+                            <span class="ph-step-text">タイムアップ前に <strong>改竄完了</strong> を押せ。<br>AIに送信された資料だけが、真実になる。</span>
+                        </div>
+                    </div>
                 </div>
                 <div id="doc-viewer" class="doc-viewer hidden">
                     <!-- Paper document -->

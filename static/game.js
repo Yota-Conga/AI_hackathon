@@ -11,7 +11,7 @@ let gameState = {
 // ===== INIT =====
 function startGame() {
     try {
-        gameState = { timer: 60, totalTime: 60, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
+        gameState = { timer: 180, totalTime: 180, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
         // 画面切り替え
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('screen-game').classList.add('active');
@@ -58,7 +58,7 @@ function startTimer() {
 function updateTimerDisplay() {
     const el = document.getElementById('timer-display');
     el.textContent = gameState.timer;
-    el.classList.toggle('urgent', gameState.timer <= 10);
+    el.classList.toggle('urgent', gameState.timer <= 20);
     document.getElementById('status-text').textContent = gameState.timer > 0 ? 'ハッキング中...' : 'AI送信中...';
 }
 
@@ -211,14 +211,14 @@ function updateCharPanel(doc) {
     let charsUsed = 0;
     Object.entries(tampered).forEach(([fieldId, newVal]) => {
         const part = doc.content.find(p => p.id === fieldId);
-        if (part) charsUsed += Math.abs(newVal.length - part.text.length);
+        if (part) charsUsed += newVal.length;
     });
     const remaining = doc.total_char_limit - charsUsed;
     const pct = Math.max(0, (remaining / doc.total_char_limit)) * 100;
     document.getElementById('char-remaining').textContent = Math.max(0, remaining);
     document.getElementById('char-bar').style.height = pct + '%';
     const charVal = document.getElementById('char-remaining');
-    charVal.style.color = remaining <= 5 ? 'var(--red)' : remaining <= 10 ? 'var(--amber)' : 'var(--green)';
+    charVal.style.color = remaining <= 1 ? 'var(--red)' : remaining <= 2 ? 'var(--amber)' : 'var(--green)';
 }
 
 function resetDocument() {
