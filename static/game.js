@@ -11,7 +11,7 @@ let gameState = {
 // ===== INIT =====
 function startGame() {
     try {
-        gameState = { timer: 120, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
+        gameState = { timer: 120, totalTime: 120, timerInterval: null, currentDocId: null, tamperedDocs: {}, modelAnswer: null, modelAnswerVisible: false };
         // 画面切り替え
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById('screen-game').classList.add('active');
@@ -63,7 +63,8 @@ function updateTimerDisplay() {
 }
 
 function updateProgress() {
-    const pct = ((60 - gameState.timer) / 60) * 100;
+    const total = gameState.totalTime;
+    const pct = Math.min(100, Math.max(0, ((total - gameState.timer) / total) * 100));
     document.getElementById('progress-bar').style.width = pct + '%';
     document.getElementById('progress-dot').style.left = pct + '%';
 }
@@ -290,7 +291,7 @@ function showResult(data) {
         gigoEl.classList.add('hidden');
     }
 
-    analysisEl.textContent = data.analysis;
+    analysisEl.innerHTML = renderMarkdown(data.analysis);
 
     // Store model answer
     if (data.model_answer) {
@@ -330,6 +331,24 @@ function toggleModelAnswer() {
 }
 
 // ===== UTILITIES =====
+function renderMarkdown(text) {
+    // Escape HTML first
+    let html = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    // ## Heading
+    html = html.replace(/^## (.+)$/gm, '<h3 class="ai-heading">$1</h3>');
+    // **bold**
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // *italic*
+    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    // newlines to <br>
+    html = html.replace(/
+/g, '<br>');
+    return html;
+}
+
 function escapeHtml(str) {
     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
