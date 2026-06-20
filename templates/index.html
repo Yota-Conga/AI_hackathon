@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GIGO - データを汚染せよ</title>
+    <title>GIGO - Garbage In, Guilty Out</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+JP:wght@300;400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="game-data" data-game='{{ game_data }}'></div>
 
     <!-- ========== TITLE SCREEN ========== -->
     <div id="screen-title" class="screen active">
         <div class="title-bg">
             <div class="scanlines"></div>
             <div class="glitch-container">
-                <h1 class="title-main" data-text="Garbage In, Guilty Out.
-">Garbage In, Guilty Out.</h1>
+                <div class="title-eyebrow">GARBAGE IN, GUILTY OUT</div>
+                <h1 class="title-main" data-text="GIGO">GIGO</h1>
                 <div class="title-sub">データを汚染せよ</div>
             </div>
             <div class="title-desc">
                 <p>西暦2047年。警察はすべての捜査をAIに委ねた。</p>
                 <p>AIは嘘をつかない——<span class="highlight">だが、騙される。</span></p>
-                <p class="desc-small">あなたは天才ハッカー。AIに資料が送信される前に、<br>証拠を書き換えて別の人間を犯人に仕立て上げろ。</p>
+                <p class="desc-small">あなたは天才ハッカー。証拠資料はすべてあなたを指している。<br>AIに資料が送信される前に書き換えて、別の人間を犯人に仕立て上げろ。</p>
             </div>
             <button class="btn-start" onclick="startGame()">
                 <span class="btn-text">ハッキング開始</span>
                 <span class="btn-arrow">▶</span>
             </button>
-            <div class="title-footer">GIGO : Garbage In, Garbage Out</div>
+            <div class="title-footer">GIGO : Garbage In, Guilty Out</div>
         </div>
     </div>
 
@@ -45,16 +44,14 @@
             <div class="top-center">
                 <div class="progress-track">
                     <div class="progress-label-left">
-                        <span class="icon-doc-small">📄</span>
-                        <span>捜査資料</span>
+                        <span>📄</span><span>捜査資料</span>
                     </div>
                     <div class="progress-bar-wrap">
                         <div class="progress-bar" id="progress-bar"></div>
                         <div class="progress-dot" id="progress-dot"></div>
                     </div>
                     <div class="progress-label-right">
-                        <span>🤖</span>
-                        <span>AI</span>
+                        <span>🤖</span><span>AI</span>
                     </div>
                 </div>
             </div>
@@ -68,10 +65,10 @@
         <!-- MAIN AREA -->
         <div class="main-area">
 
-            <!-- LEFT PANEL: suspect list icon -->
+            <!-- LEFT PANEL -->
             <div class="left-panel">
                 <button class="icon-btn suspect-btn" onclick="openSuspects()" title="容疑者一覧">
-                    <span class="icon-btn-icon">🗂</span>
+                    <span class="icon-btn-icon">🗂️</span>
                     <span class="icon-btn-label">容疑者</span>
                 </button>
             </div>
@@ -81,17 +78,29 @@
                 <div id="doc-placeholder" class="doc-placeholder">
                     <div class="placeholder-icon">🔒</div>
                     <div class="placeholder-text">下の資料アイコンを選択して<br>内容を確認・改竄せよ</div>
+                    <div class="placeholder-warn">⚠ 初期状態ではすべての証拠があなたを指している</div>
                 </div>
                 <div id="doc-viewer" class="doc-viewer hidden">
-                    <div class="doc-header">
-                        <span id="doc-title" class="doc-title"></span>
-                        <button class="btn-reset" onclick="resetDocument()">↺ リセット</button>
+                    <!-- Paper document -->
+                    <div class="paper">
+                        <div class="paper-header">
+                            <div class="paper-meta-row">
+                                <span class="paper-docnum" id="paper-docnum"></span>
+                                <span class="paper-date" id="paper-date"></span>
+                            </div>
+                            <h2 class="paper-title" id="paper-title"></h2>
+                            <div class="paper-author" id="paper-author"></div>
+                            <div class="paper-divider"></div>
+                        </div>
+                        <div id="doc-content" class="paper-body"></div>
+                        <div class="paper-footer">
+                            <button class="btn-reset" onclick="resetDocument()">↺ 改竄をリセット</button>
+                        </div>
                     </div>
-                    <div id="doc-content" class="doc-content"></div>
                 </div>
             </div>
 
-            <!-- RIGHT PANEL: char limit -->
+            <!-- RIGHT PANEL -->
             <div class="right-panel">
                 <div id="char-panel" class="char-panel hidden">
                     <div class="char-label">改竄可能<br>文字数</div>
@@ -99,15 +108,16 @@
                     <div class="char-bar-wrap">
                         <div class="char-bar" id="char-bar"></div>
                     </div>
+                    <div class="char-sublabel">残り</div>
                 </div>
             </div>
         </div>
 
-        <!-- BOTTOM BAR: document icons -->
+        <!-- BOTTOM BAR -->
         <div class="bottom-bar">
             <div class="doc-icons" id="doc-icons"></div>
             <button class="btn-confirm" id="btn-confirm" onclick="confirmTampering()">
-                <span>改竄完了</span>
+                <span>改竄完了・送信</span>
                 <span class="confirm-arrow">⟶</span>
             </button>
         </div>
@@ -126,9 +136,17 @@
                 <p class="gigo-a">——いいえ。</p>
                 <p class="gigo-body">AIは与えられたデータから<br><strong>最も合理的な結論を導きました。</strong></p>
                 <p class="gigo-body">間違っていたのはAIではなく、<br><strong>AIに与えられたデータです。</strong></p>
-                <p class="gigo-term">Garbage In, Garbage Out.</p>
+                <p class="gigo-term">Garbage In, Guilty Out.</p>
             </div>
-            <button class="btn-start" onclick="restartGame()">もう一度プレイ</button>
+            <!-- 模範解答 -->
+            <div id="model-answer-box" class="model-answer-box hidden">
+                <div class="ma-header">── 模範解答 ──</div>
+                <div id="model-answer-content"></div>
+            </div>
+            <div class="result-btns">
+                <button class="btn-start" onclick="toggleModelAnswer()">模範解答を見る</button>
+                <button class="btn-start btn-restart" onclick="restartGame()">もう一度プレイ</button>
+            </div>
         </div>
     </div>
 
@@ -137,7 +155,7 @@
         <div class="popup-box">
             <button class="popup-close" onclick="closeSuspects()">✕</button>
             <h2 class="popup-title">容疑者一覧</h2>
-            <div id="suspect-list" class="suspect-list"></div>
+            <div id="suspect-list"></div>
         </div>
     </div>
 
@@ -151,7 +169,7 @@
     </div>
 
     <script>
-        const GAME_DATA = JSON.parse(document.getElementById('game-data').dataset.game);
+        const GAME_DATA = {{ game_data | tojson | safe }};
     </script>
     <script src="{{ url_for('static', filename='game.js') }}"></script>
 </body>
