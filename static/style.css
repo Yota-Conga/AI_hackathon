@@ -57,7 +57,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 @keyframes glitch-a { 0%,88%,92%,100%{opacity:0} 89%,91%{opacity:.8;transform:translateX(-3px)} }
 @keyframes glitch-b { 0%,88%,92%,100%{opacity:0} 89%,91%{opacity:.8;transform:translateX(3px)} }
 .title-sub { font-family: var(--font-body); font-size: 1.4rem; font-weight: 300; color: #c8d8e8; letter-spacing: 0.5em; margin-top: 0.6rem; text-shadow: 0 0 12px rgba(200,220,255,0.25); }
-.title-desc { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; z-index: 1; position: relative; display: flex; flex-direction: column; gap: 0.75rem; align-items: center; width: 100%; max-width: 520px; }
+.title-desc { text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem; z-index: 1; position: relative; padding: 1.25rem 1rem; border-top: 1px solid rgba(0,255,136,0.15); }
 .title-desc p { font-size: 0.95rem; line-height: 1.9; color: #b8ccd8; }
 .title-desc .highlight { color: var(--red); font-weight: 700; }
 .title-desc .desc-story { font-size: 0.95rem; color: #c8d8e8; line-height: 2; }
