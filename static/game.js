@@ -1,6 +1,6 @@
 // ===== STATE =====
 let gameState = {
-    timer: 60,
+    timer: 120,
     timerInterval: null,
     currentDocId: null,
     tamperedDocs: {},
